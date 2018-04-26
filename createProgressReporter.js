@@ -1,12 +1,17 @@
 /* eslint no-console: off */
-module.exports = function createProgressReporter() {
+module.exports = function createProgressReporter(options) {
   let lastReported = 0
   let lastFile
+  let shouldHookExit = options && options.hookExit
   const stats = []
   const eslintPlugin = {
     rules: {
       'activate': {
         create(context) {
+          if (shouldHookExit) {
+            shouldHookExit = false
+            process.on('exit', printStats)
+          }
           const now = Date.now()
           if (now > lastReported + 15000) {
             lastReported = now
