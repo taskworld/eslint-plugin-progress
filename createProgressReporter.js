@@ -6,7 +6,7 @@ module.exports = function createProgressReporter(options) {
   const stats = []
   const eslintPlugin = {
     rules: {
-      'activate': {
+      activate: {
         create(context) {
           if (shouldHookExit) {
             shouldHookExit = false
